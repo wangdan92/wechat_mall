@@ -1,6 +1,7 @@
+const prefixUrl="";
 //index.js
 Page({
- 
+
   /**
    * 页面的初始数据
    */
@@ -14,7 +15,7 @@ Page({
     interval: 3000, //间隔时间
     duration: 1000, //滑动时间
   },
- 
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -34,7 +35,7 @@ Page({
     })
 },
 
-  
+
   //轮播图片
   text: function() {
     var that = this;//这部必须有，非常重要
@@ -47,10 +48,10 @@ Page({
       success(res) {
         console.log(res.data.headLineList);
         that.setData({
-          imgUrls: res.data.headLineList 
-          
+          imgUrls: res.data.headLineList
+
        });//这里的imgUrls和<wxml>的imgUrls是同一个变量，就是将从后端获取到的数据赋值给imgUrls，传到前面使用
-     
+
         console.log(that.data.imgUrls);
         wx.hideLoading();//隐藏加载
       }
@@ -70,7 +71,7 @@ Page({
       success(res) {
         console.log(res.data.minilistshops);
         that.setData({
-          mainShopList: res.data.minilistshops 
+          mainShopList: res.data.minilistshops
        })//这里的imgUrls和<wxml>的imgUrls是同一个变量，就是将从后端获取到的数据赋值给imgUrls，传到前面使用
         wx.hideLoading();//隐藏加载
       }
@@ -86,7 +87,7 @@ Page({
 
   //点击店铺进入店铺
   // entershop: function() {
-    
+
   //   wx.navigateTo({
   //     url: "../shop/shop"
   //   })
@@ -95,48 +96,48 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
- 
+
   },
- 
+
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
- 
+
   },
- 
+
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
- 
+
   },
- 
+
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
- 
+
   },
- 
+
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
- 
+
   },
- 
+
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
- 
+
   },
- 
+
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
- 
+
   }
 })
