@@ -1,6 +1,6 @@
 var app = getApp();
 var MD5Encode = require("MD5Encode.js");
-
+const prefixUrl="http://31321q74y3.wicp.vip/";
 /**
  * 对字符串判空
  */
@@ -113,5 +113,6 @@ module.exports = {
     sentHttpRequestToServer: sentHttpRequestToServer,
     mapToJson: mapToJson,
     toastSuccess: toastSuccess,
-    doWechatPay: doWechatPay
+    doWechatPay: doWechatPay,
+    prefixUrl:prefixUrl,
 }

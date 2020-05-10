@@ -1410,7 +1410,7 @@ Page({
     var list = this.data.totalPrice
       var resultType = "success";
       wx.redirectTo({
-          url: '../pay/pay?resultType=' + resultType+'&shoplist111=' +list + '&name=ji'+'&totalp= '+this.data.totalPrice+'&payE='+this.data.deliveryPrice
+          url: '../pay/pay?resultType=' + resultType+'&shoplist111=' +list + '&name=ji'+'&totalp= '+this.data.totalPrice+'&payE='+this.data.deliveryPrice+"&shopName="+this.data.shopName
       })
   },
   //彈起購物車
@@ -1448,11 +1448,12 @@ Page({
       // 页面初始化 options为页面跳转所带来的参数
       var that = this;
       
-      console.log(options.shopId)
+      console.log("====shop====",options);
       //return;
       this.setData({
           payDesc: this.payDesc(),
-          shopId: options.shopId
+          shopId: options.shopId,
+          shopName: options.shopName,
       });
       console.log(this.data.shopId)
       this.shopdetail();

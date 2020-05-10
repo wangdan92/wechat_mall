@@ -54,6 +54,7 @@ page{
 
 .fontSize12 {
     font-size: 12px;
+
 }
 
 .fontSize14 {
@@ -102,8 +103,8 @@ page{
 }
 
 .orderImage {
-    width: 10px;
-    height: 11px;
+    width: 50rpx;
+    height: 50rpx;
     margin-right: 5px;
 }
 

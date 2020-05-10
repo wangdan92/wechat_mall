@@ -1,7 +1,11 @@
 //获取应用实例
+const common = require('../../utils/common.js')
+const prefixUrl=common.prefixUrl
+const util = require('../../utils/util.js')
 var app = getApp()
 Page({
   data: {
+    prefixUrl: prefixUrl,
     bianhao:'',
     totalIncome: 0.0,
     runningMoney: 0.0,
@@ -85,7 +89,7 @@ quxiao:function(e){
     success (res) {
       if (res.confirm) {
         wx.request({
-          url: 'http://127.0.0.1:8080/o2o/buyer/order/cancle?orderId=' + e.currentTarget.dataset.text,
+          url: prefixUrl+'/o2o/buyer/order/cancle?orderId=' + e.currentTarget.dataset.text,
           success(q) {
             wx.showToast({
               title: '取消成功',
@@ -110,7 +114,7 @@ queren:function(){
     success (res) {
       if (res.confirm) {
         wx.request({
-          url: 'http://127.0.0.1:8080/o2o/buyer/order/finish/?orderId=' + e.currentTarget.dataset.text,       
+          url: prefixUrl+'/o2o/buyer/order/finish/?orderId=' + e.currentTarget.dataset.text,       
           success(q) {
             console.log(q.data)
           }
@@ -133,7 +137,7 @@ queren:function(){
         title: '订单管理'
     })
     wx.request({
-      url: 'http://127.0.0.1:8080/o2o/buyer/order/list',
+      url: prefixUrl+'/o2o/buyer/order/list',
       success(res){
         console.log(res.data.orderList)
         that.setData({

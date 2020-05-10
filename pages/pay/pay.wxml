@@ -26,23 +26,22 @@
     <!--详细地址-->
 
   <view class="people">
-  <text>订单详情</text>
+       <text>订单详情</text>
   </view>
   <view>
-  <view wx:for="{{shoplist}}">
-  <view  class="height1">
-  <view><text class = "c1">{{item.name}}</text></view>
-  
-  <view><text class="c2">x{{item.num}}</text></view>
-  <view><text calss="c3">{{item.price}}</text></view>
+    <view wx:for="{{shoplist}}" style=" background-color: white;">
+      <view  class="height1 spacebetween">
+          <view><text class = "c1">{{item.name}}</text></view>
+          <view><text class="c2">x{{item.num}}</text></view>
+          <view><text calss="c3">¥ {{item.price}}</text></view>
+      </view>
+    </view>
   </view>
+  <view class = "people">
+        <text>配送费：</text> ¥ {{payE}}
   </view>
-  <view class="height1"></view>
-  <view class = "height1"><text>配送费：</text> {{payE}}</view>
-  <view class ="height1">
-  <text>总价：</text>{{total1111}}  </view>
+  <view class ="people">
+        <text>总价：</text>¥ {{total11+payE}} 
   </view>
-  
-
   <button class="save" formType="submit">支付</button>
 </form>

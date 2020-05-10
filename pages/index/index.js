@@ -1,11 +1,14 @@
-const prefixUrl="";
 //index.js
+const common = require('../../utils/common.js')
+const prefixUrl=common.prefixUrl
+const util = require('../../utils/util.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    prefixUrl: prefixUrl,
     inputShowed: false,  //初始文本框不显示内容
     inputVal: "",
     imgUrls: [],
@@ -40,7 +43,7 @@ Page({
   text: function() {
     var that = this;//这部必须有，非常重要
     wx.request( {//从后端获取数据
-      url: 'http://127.0.0.1:8080/o2o/frontend/listheadlineinfo',//后端传数据的路径
+      url: prefixUrl+'/o2o/frontend/listheadlineinfo',//后端传数据的路径
       data: {},
       header: {
         'content-type': 'application/json' // 默认值
@@ -63,7 +66,7 @@ Page({
   allshop: function() {
     var that = this;//这部必须有，非常重要
     wx.request( {//从后端获取数据
-      url: 'http://127.0.0.1:8080/o2o/frontend/minilistshops',//后端传数据的路径
+      url: prefixUrl+'/o2o/frontend/minilistshops',//后端传数据的路径
       data: {},
       header: {
         'content-type': 'application/json' // 默认值

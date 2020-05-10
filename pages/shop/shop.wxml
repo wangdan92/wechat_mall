@@ -39,7 +39,7 @@
 <!--head -->
 
 <!--tab -->
-<view class="tab border-1px">
+<view class="tab border-1px ">
 	<view class="tab-item">
 		<a class="{{status==0 ? 'active':''}}" bindtap="tabChange" data-type="0">商品</a>
 	</view>

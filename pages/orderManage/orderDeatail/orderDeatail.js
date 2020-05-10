@@ -1,6 +1,10 @@
 // pages/orderManage/orderDeatail.js
+const common = require('../../../utils/common.js')
+const prefixUrl=common.prefixUrl
+const util = require('../../../utils/util.js')
 Page({
   data:{
+    prefixUrl: prefixUrl,
     orderNum: '',
     appointmentNum: 5,
     appointmentTime: '2017年2月16日  11:42',
@@ -11,7 +15,7 @@ Page({
     nickName: '恋人心',
     phoneNum: '18202801506',
     url: 'http://60.205.161.252//Public/uploads/app/2016-12-15/58523b031fa7b.png',
-    statusImage: ['../images/daijiedai.png'],
+    statusImage: ['/image/daijiedai.png'],
     statusText: ['未付款', '已配送', '已完成'],
   },
   onLoad:function(options){
@@ -26,7 +30,7 @@ Page({
       orderNum:options.orderId
     })
     wx.request({
-      url: 'http://127.0.0.1:8080/o2o/buyer/order/itemlist?orderId=' + num,
+      url: prefixUrl+'/o2o/buyer/order/itemlist?orderId=' + num,
       success(res){
         console.log(res.data.itemList)
         that.setData({

@@ -9,20 +9,20 @@
 		<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true">
 			<block wx:for="{{imgUrls}}" wx:key="imgUrls">
 				<swiper-item>
-					<navigator url='../shop/shop?shopId={{item.lineLink}}'>
-						<image class="img1" src="http://127.0.0.1:8080{{item.lineImg}}" mode="widthFix" />
+					<navigator url='../shop/shop?shopId={{item.lineLink}}&shopName={{item.shopName}}'>
+						<image class="swiperImg" src="{{prefixUrl+item.lineImg}}"  />
 					</navigator>
 				</swiper-item>
 			</block>
 		</swiper>
 	</view>
-	<scroll-view scroll-y="true">
+	<scroll-view scroll-y="true" style="margin:10rpx;">
 		<view class="shoplisttitle">超市列表</view>
 		<block wx:for="{{mainShopList}}" wx:key="mainShopList">
-			<navigator url='../shop/shop?shopId={{item.shopId}}'>
+			<navigator url='../shop/shop?shopId={{item.shopId}}&shopName={{item.shopName}}'>
 				<view class="shoplist">
-					<view class="shop-img">
-						<image src="http://127.0.0.1:8080/o2o{{item.shopImg}}" />
+					<view class="shop-img" >
+						<image src="{{prefixUrl}}/o2o{{item.shopImg}}" />
 					</view>
 					<view class="shop-right">
 						<view class="now-title">{{item.shopName}}</view>

@@ -5,386 +5,382 @@
         </view>
     </view>
 
-    <view class="tab_con flexItem rowStyle {{currentNavtab==0 ? 'list_active0' : ''}} {{currentNavtab==1 ? 'list_active1' : ''}} {{currentNavtab==2 ? 'list_active2' : ''}} {{currentNavtab==3 ? 'list_active3' : ''}} {{currentNavtab==4 ? 'list_active4' : ''}}">
-        <view class="view1 width20"  bindtouchstart="catchtouchstart" bindtouchend="catchtouchend">
-            <scroll-view class="tableView" scroll-y="true" wx:if="{{hasData}}"  wx:for="{{ moneyInfo }}" wx:for-item="info">
-                   
-        <view class="flexItem rowStyle tableViewCellHeader marginTop10" catchtap="goDeatailEvent">
-                    <image class="orderImage marginLeft12" src="../images/dingdan.png"></image>
-                    <label class="color54 fontSize12">订单编号: {{ info. orderId}}</label>
-                </view>
+    <view class="tab_con flexItem rowStyle {{currentNavtab==0 ? 'list_active0' : ''}} {{currentNavtab==1 ? 'list_active1' : ''}} {{currentNavtab==2 ? 'list_active2' : ''}} {{currentNavtab==3 ? 'list_active3' : ''}} {{currentNavtab==4 ? 'list_active4' : ''}}" style="margin-top:100rpx;">
+         <view class="view1 width20"  bindtouchstart="catchtouchstart" bindtouchend="catchtouchend">
+            <scroll-view class="tableView" scroll-y="true" wx:if="{{hasData}}"  wx:for="{{ moneyInfo }}" wx:for-item="info">         
+                    <view class="flexItem rowStyle tableViewCellHeader marginTop10" catchtap="goDeatailEvent">
+                                <image class="orderImage marginLeft12"  src="/image/dingdan.png"></image>
+                                <label class="color54 fontSize12">订单编号: {{ info. orderId}}</label>
+                    </view>
                
-                <view class="flexItem columnStyle tableViewCell" catchtap="goDeatailEvent">
+                    <view class="flexItem columnStyle tableViewCell" catchtap="goDeatailEvent">
 
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">店铺名称</label>
-                        <label class="color54 fontSize12">{{ info.shopName }}</label>
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">店铺名称</label>
+                            <label class="color54 fontSize12">{{ info.shopName }}</label>
+                        </view>
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">订单状态</label>
+                            <view wx:if = "{{info.orderStatus == '0'}}">
+                            <label class="color54 fontSize12">新订单</label>
+                            </view>
+                            <view wx:elif = "{{info.orderStatus == '1'}}">
+                            <label class="color54 fontSize12">已完成</label>
+                            </view>
+                            <view wx:elif = "{{info.orderStatus == '2'}}">
+                            <label class="color54 fontSize12">已取消</label>
+                            </view>
+                            <view wx:else>
+                            <label class="color54 fontSize12">已配送</label>
+                            </view>
+                        </view>
+
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">支付状态</label>
+                            <view wx:if = "{{info.payStatus == '0'}}">
+                            <label class="color54 fontSize12">未支付</label>
+                            </view>
+                            <view wx:else>
+                            <label class="color54 fontSize12">已支付</label>
+                            </view>
+                        </view>
+
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">订单时间</label>
+                            <label class="fontSize14">{{dateFr.getDate(info.createTime,'-',':',' ')}}</label>
+                        </view>
+
+                        
+                        <navigator url='../orderManage/orderDeatail/orderDeatail?orderId={{info. orderId}}'>
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12"></label>
+                            <label class="color54 fontSize12">订单详情</label>
+                
+                        </view>
+                        </navigator>
                     </view>
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">订单状态</label>
-                        <view wx:if = "{{info.orderStatus == '0'}}">
-                        <label class="color54 fontSize12">新订单</label>
-                        </view>
-                        <view wx:elif = "{{info.orderStatus == '1'}}">
-                        <label class="color54 fontSize12">已完成</label>
-                        </view>
-                        <view wx:elif = "{{info.orderStatus == '2'}}">
-                        <label class="color54 fontSize12">已取消</label>
-                        </view>
-                        <view wx:else>
-                        <label class="color54 fontSize12">已配送</label>
-                        </view>
+                    <view class="flexItem rowStyle centers orderStatus" catchtap="goDeatailEvent">
+                
+                    <view wx:if="{{info.orderStatus =='0' || info.orderStatus =='3'}}">
+                    <button style="font-size:10px" bindtap="quxiao" data-text = "{{info.orderId}}">取消订单</button>
                     </view>
-
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">支付状态</label>
-                        <view wx:if = "{{info.payStatus == '0'}}">
-                        <label class="color54 fontSize12">未支付</label>
-                        </view>
-                        <view wx:else>
-                        <label class="color54 fontSize12">已支付</label>
-                        </view>
+                    <view wx:else>
+                    <button style="font-size:10px" disabled="true">取消订单</button>
                     </view>
-
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">订单时间</label>
-                        <label class="fontSize14">{{dateFr.getDate(info.createTime,'-',':',' ')}}</label>
+                    <view wx:if="{{info.orderStatus =='3'}}">
+                    <button style="font-size:10px" bindtap="queren" data-text = "{{info.orderId}}">确认送达</button>
                     </view>
-
-                    
-                    <navigator url='../orderManage/orderDeatail/orderDeatail?orderId={{info. orderId}}'>
-                     <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12"></label>
-                        <label class="color54 fontSize12">订单详情</label>
-              
+                    <view wx:else>
+                    <button style="font-size:10px" disabled="true">确认送达</button>
                     </view>
-                    </navigator>
-                </view>
-                <view class="flexItem rowStyle centers orderStatus" catchtap="goDeatailEvent">
-             
-                   <view wx:if="{{info.orderStatus =='0' || info.orderStatus =='3'}}">
-                   <button style="font-size:10px" bindtap="quxiao" data-text = "{{info.orderId}}">取消订单</button>
-                   </view>
-                   <view wx:else>
-                   <button style="font-size:10px" disabled="true">取消订单</button>
-                   </view>
-                   <view wx:if="{{info.orderStatus =='3'}}">
-                   <button style="font-size:10px" bindtap="queren" data-text = "{{info.orderId}}">确认送达</button>
-                   </view>
-                   <view wx:else>
-                   <button style="font-size:10px" disabled="true">确认送达</button>
-                   </view>
-                </view>
+                    </view>
             </scroll-view>
         </view>
 
         <view class="view2 width20"  bindtouchstart="catchtouchstart" bindtouchend="catchtouchend">
             <scroll-view class="tableView" scroll-y="true" wx:if="{{hasData}}"  wx:for="{{ moneyInfo }}" wx:for-item="info">
-            <view wx:if="{{info.orderStatus == '0'}}">
-        <view class="flexItem rowStyle tableViewCellHeader marginTop10" catchtap="goDeatailEvent">
-                   <image class="orderImage marginLeft12" src="../images/dingdan.png"></image>
-                    <label class="color54 fontSize12">订单编号: {{ info. orderId}}</label>
+                <view wx:if="{{info.orderStatus == '0'}}">
+        
+                    <view class="flexItem rowStyle tableViewCellHeader marginTop10" catchtap="goDeatailEvent">
+                            <image class="orderImage marginLeft12" src="/image/dingdan.png"></image>
+                                <label class="color54 fontSize12">订单编号: {{ info. orderId}}</label>
+                    </view>
+                
+                    <view class="flexItem columnStyle tableViewCell" catchtap="goDeatailEvent">
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">店铺名称</label>
+                            <label class="color54 fontSize12">{{ info.shopName }}</label>
+                        </view>
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">订单状态</label>
+                            <view wx:if = "{{info.orderStatus == '0'}}">
+                            <label class="color54 fontSize12">新订单</label>
+                            </view>
+                            <view wx:elif = "{{info.orderStatus == '1'}}">
+                            <label class="color54 fontSize12">已完成</label>
+                            </view>
+                            <view wx:elif = "{{info.orderStatus == '2'}}">
+                            <label class="color54 fontSize12">已取消</label>
+                            </view>
+                            <view wx:else>
+                            <label class="color54 fontSize12">已配送</label>
+                            </view>
+                        </view>
+
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">支付状态</label>
+                            <view wx:if = "{{info.payStatus == '0'}}">
+                            <label class="color54 fontSize12">未支付</label>
+                            </view>
+                            <view wx:else>
+                            <label class="color54 fontSize12">已支付</label>
+                            </view>
+                        </view>
+
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">订单时间</label>
+                            <label class="fontSize14">{{dateFr.getDate(info.createTime,'-',':',' ')}}</label>
+                        </view>
+
+                        
+                        <navigator url='../orderManage/orderDeatail/orderDeatail?orderId={{info. orderId}}'>
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12"></label>
+                            <label class="color54 fontSize12">订单详情</label>
+                
+                        </view>
+                        </navigator>
+                    </view>
+                    <view class="flexItem rowStyle centers orderStatus" catchtap="goDeatailEvent">
+    
+                    <view wx:if="{{info.orderStatus =='0' || info.orderStatus =='3'}}">
+                    <button style="font-size:10px" bindtap="quxiao" data-text = "{{info.orderId}}">取消订单</button>
+                    </view>
+                    <view wx:else>
+                    <button style="font-size:10px" disabled="true">取消订单</button>
+                    </view>
+                    <view wx:if="{{info.orderStatus =='3'}}">
+                    <button style="font-size:10px" bindtap="queren" data-text = "{{info.orderId}}">确认送达</button>
+                    </view>
+                    <view wx:else>
+                    <button style="font-size:10px" disabled="true">确认送达</button>
+                    </view>
+                    </view>
                 </view>
-               
-                <view class="flexItem columnStyle tableViewCell" catchtap="goDeatailEvent">
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">店铺名称</label>
-                        <label class="color54 fontSize12">{{ info.shopName }}</label>
-                    </view>
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">订单状态</label>
-                        <view wx:if = "{{info.orderStatus == '0'}}">
-                        <label class="color54 fontSize12">新订单</label>
-                        </view>
-                        <view wx:elif = "{{info.orderStatus == '1'}}">
-                        <label class="color54 fontSize12">已完成</label>
-                        </view>
-                        <view wx:elif = "{{info.orderStatus == '2'}}">
-                        <label class="color54 fontSize12">已取消</label>
-                        </view>
-                        <view wx:else>
-                        <label class="color54 fontSize12">已配送</label>
-                        </view>
-                    </view>
-
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">支付状态</label>
-                        <view wx:if = "{{info.payStatus == '0'}}">
-                        <label class="color54 fontSize12">未支付</label>
-                        </view>
-                        <view wx:else>
-                        <label class="color54 fontSize12">已支付</label>
-                        </view>
-                    </view>
-
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">订单时间</label>
-                        <label class="fontSize14">{{dateFr.getDate(info.createTime,'-',':',' ')}}</label>
-                    </view>
-
-                    
-                    <navigator url='../orderManage/orderDeatail/orderDeatail?orderId={{info. orderId}}'>
-                     <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12"></label>
-                        <label class="color54 fontSize12">订单详情</label>
-              
-                    </view>
-                    </navigator>
-                </view>
-                <view class="flexItem rowStyle centers orderStatus" catchtap="goDeatailEvent">
-  
-                   <view wx:if="{{info.orderStatus =='0' || info.orderStatus =='3'}}">
-                   <button style="font-size:10px" bindtap="quxiao" data-text = "{{info.orderId}}">取消订单</button>
-                   </view>
-                   <view wx:else>
-                   <button style="font-size:10px" disabled="true">取消订单</button>
-                   </view>
-                   <view wx:if="{{info.orderStatus =='3'}}">
-                   <button style="font-size:10px" bindtap="queren" data-text = "{{info.orderId}}">确认送达</button>
-                   </view>
-                   <view wx:else>
-                   <button style="font-size:10px" disabled="true">确认送达</button>
-                   </view>
-                </view>
-        </view>
-    </scroll-view>
+            </scroll-view>
         </view>
 
         <view class="view3 width20"  bindtouchstart="catchtouchstart" bindtouchend="catchtouchend">
             <scroll-view class="tableView" scroll-y="true" wx:if="{{hasData}}"  wx:for="{{ moneyInfo }}" wx:for-item="info">
-            <view wx:if="{{info.orderStatus == '2'}}">
-         <view class="flexItem rowStyle tableViewCellHeader marginTop10" catchtap="goDeatailEvent">
-                    <image class="orderImage marginLeft12" src="../images/dingdan.png"></image>
-                    <label class="color54 fontSize12">订单编号: {{ info. orderId}}</label>
+                <view wx:if="{{info.orderStatus == '2'}}">
+                    <view class="flexItem rowStyle tableViewCellHeader marginTop10" catchtap="goDeatailEvent">
+                        <image class="orderImage marginLeft12" src="/image/dingdan.png"></image>
+                        <label class="color54 fontSize12">订单编号: {{ info. orderId}}</label>
+                    </view>
+                
+                    <view class="flexItem columnStyle tableViewCell" catchtap="goDeatailEvent">
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">店铺名称</label>
+                            <label class="color54 fontSize12">{{ info.shopName }}</label>
+                        </view>
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">订单状态</label>
+                            <view wx:if = "{{info.orderStatus == '0'}}">
+                            <label class="color54 fontSize12">新订单</label>
+                            </view>
+                            <view wx:elif = "{{info.orderStatus == '1'}}">
+                            <label class="color54 fontSize12">已完成</label>
+                            </view>
+                            <view wx:elif = "{{info.orderStatus == '2'}}">
+                            <label class="color54 fontSize12">已取消</label>
+                            </view>
+                            <view wx:else>
+                            <label class="color54 fontSize12">已配送</label>
+                            </view>
+                        </view>
+
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">支付状态</label>
+                            <view wx:if = "{{info.payStatus == '0'}}">
+                            <label class="color54 fontSize12">未支付</label>
+                            </view>
+                            <view wx:else>
+                            <label class="color54 fontSize12">已支付</label>
+                            </view>
+                        </view>
+
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">订单时间</label>
+                            <label class="fontSize14">{{dateFr.getDate(info.createTime,'-',':',' ')}}</label>
+                        </view>
+
+                        
+                        <navigator url='../orderManage/orderDeatail/orderDeatail?orderId={{info. orderId}}'>
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12"></label>
+                            <label class="color54 fontSize12">订单详情</label>
+                
+                        </view>
+                        </navigator>
+                    </view>
+                    <view class="flexItem rowStyle centers orderStatus" catchtap="goDeatailEvent">
+
+                    <view wx:if="{{info.orderStatus =='0' || info.orderStatus =='3'}}">
+                    <button style="font-size:10px" bindtap="quxiao" data-text = "{{info.orderId}}">取消订单</button>
+                    </view>
+                    <view wx:else>
+                    <button style="font-size:10px" disabled="true">取消订单</button>
+                    </view>
+                    <view wx:if="{{info.orderStatus =='3'}}">
+                    <button style="font-size:10px" bindtap="queren" data-text = "{{info.orderId}}">确认送达</button>
+                    </view>
+                    <view wx:else>
+                    <button style="font-size:10px" disabled="true">确认送达</button>
+                    </view>
+                    </view>
                 </view>
-               
-                <view class="flexItem columnStyle tableViewCell" catchtap="goDeatailEvent">
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">店铺名称</label>
-                        <label class="color54 fontSize12">{{ info.shopName }}</label>
-                    </view>
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">订单状态</label>
-                        <view wx:if = "{{info.orderStatus == '0'}}">
-                        <label class="color54 fontSize12">新订单</label>
-                        </view>
-                        <view wx:elif = "{{info.orderStatus == '1'}}">
-                        <label class="color54 fontSize12">已完成</label>
-                        </view>
-                        <view wx:elif = "{{info.orderStatus == '2'}}">
-                        <label class="color54 fontSize12">已取消</label>
-                        </view>
-                        <view wx:else>
-                        <label class="color54 fontSize12">已配送</label>
-                        </view>
-                    </view>
-
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">支付状态</label>
-                        <view wx:if = "{{info.payStatus == '0'}}">
-                        <label class="color54 fontSize12">未支付</label>
-                        </view>
-                        <view wx:else>
-                        <label class="color54 fontSize12">已支付</label>
-                        </view>
-                    </view>
-
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">订单时间</label>
-                        <label class="fontSize14">{{dateFr.getDate(info.createTime,'-',':',' ')}}</label>
-                    </view>
-
-                    
-                    <navigator url='../orderManage/orderDeatail/orderDeatail?orderId={{info. orderId}}'>
-                     <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12"></label>
-                        <label class="color54 fontSize12">订单详情</label>
-              
-                    </view>
-                    </navigator>
-                </view>
-                <view class="flexItem rowStyle centers orderStatus" catchtap="goDeatailEvent">
-
-                   <view wx:if="{{info.orderStatus =='0' || info.orderStatus =='3'}}">
-                   <button style="font-size:10px" bindtap="quxiao" data-text = "{{info.orderId}}">取消订单</button>
-                   </view>
-                   <view wx:else>
-                   <button style="font-size:10px" disabled="true">取消订单</button>
-                   </view>
-                   <view wx:if="{{info.orderStatus =='3'}}">
-                   <button style="font-size:10px" bindtap="queren" data-text = "{{info.orderId}}">确认送达</button>
-                   </view>
-                   <view wx:else>
-                   <button style="font-size:10px" disabled="true">确认送达</button>
-                   </view>
-                </view>
-        </view>
-    </scroll-view>
+            </scroll-view>
         </view>
 
         <view class="view4 width20"  bindtouchstart="catchtouchstart" bindtouchend="catchtouchend">
             <scroll-view class="tableView" scroll-y="true" wx:if="{{hasData}}"  wx:for="{{ moneyInfo }}" wx:for-item="info">
-            <view wx:if="{{info.orderStatus == '3'}}">
+                <view wx:if="{{info.orderStatus == '3'}}">
             
-        <view class="flexItem rowStyle tableViewCellHeader marginTop10" catchtap="goDeatailEvent">
-                    <image class="orderImage marginLeft12" src="../images/dingdan.png"></image>
-                    <label class="color54 fontSize12">订单编号: {{ info. orderId}}</label>
+       
+                    <view class="flexItem rowStyle tableViewCellHeader marginTop10" catchtap="goDeatailEvent">
+                        <image class="orderImage marginLeft12" src="/image/dingdan.png"></image>
+                        <label class="color54 fontSize12">订单编号: {{ info. orderId}}</label>
+                    </view>
+                
+                    <view class="flexItem columnStyle tableViewCell" catchtap="goDeatailEvent">
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">店铺名称</label>
+                            <label class="color54 fontSize12">{{ info.shopName }}</label>
+                        </view>
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">订单状态</label>
+                            <view wx:if = "{{info.orderStatus == '0'}}">
+                            <label class="color54 fontSize12">新订单</label>
+                            </view>
+                            <view wx:elif = "{{info.orderStatus == '1'}}">
+                            <label class="color54 fontSize12">已完成</label>
+                            </view>
+                            <view wx:elif = "{{info.orderStatus == '2'}}">
+                            <label class="color54 fontSize12">已取消</label>
+                            </view>
+                            <view wx:else>
+                            <label class="color54 fontSize12">已配送</label>
+                            </view>
+                        </view>
+
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">支付状态</label>
+                            <view wx:if = "{{info.payStatus == '0'}}">
+                            <label class="color54 fontSize12">未支付</label>
+                            </view>
+                            <view wx:else>
+                            <label class="color54 fontSize12">已支付</label>
+                            </view>
+                        </view>
+
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">订单时间</label>
+                            <label class="fontSize14">{{dateFr.getDate(info.createTime,'-',':',' ')}}</label>
+                        </view>
+
+                        
+                        <navigator url='../orderManage/orderDeatail/orderDeatail?orderId={{info. orderId}}'>
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12"></label>
+                            <label class="color54 fontSize12">订单详情</label>
+                
+                        </view>
+                        </navigator>
+                    </view>
+                    <view class="flexItem rowStyle centers orderStatus" catchtap="goDeatailEvent"> 
+                            <view wx:if="{{info.orderStatus =='0' || info.orderStatus =='3'}}" class="ct11">
+                            <button style="font-size:10px" bindtap="quxiao" data-text = "{{info.orderId}}">取消订单</button>
+                            </view>
+                            <view wx:else class="ct11">
+                            <button style="font-size:10px" disabled="true" >取消订单</button>
+                            </view>
+                            <view wx:if="{{info.orderStatus =='3'}}" class="ct11">
+                            <button style="font-size:10px" bindtap="queren" data-text = "{{info.orderId}}">确认送达</button>
+                            </view>
+                            <view wx:else class="ct11">
+                            <button style="font-size:10px" disabled="true">确认送达</button>
+                            </view>
+                    </view>
                 </view>
-               
-                <view class="flexItem columnStyle tableViewCell" catchtap="goDeatailEvent">
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">店铺名称</label>
-                        <label class="color54 fontSize12">{{ info.shopName }}</label>
-                    </view>
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">订单状态</label>
-                        <view wx:if = "{{info.orderStatus == '0'}}">
-                        <label class="color54 fontSize12">新订单</label>
-                        </view>
-                        <view wx:elif = "{{info.orderStatus == '1'}}">
-                        <label class="color54 fontSize12">已完成</label>
-                        </view>
-                        <view wx:elif = "{{info.orderStatus == '2'}}">
-                        <label class="color54 fontSize12">已取消</label>
-                        </view>
-                        <view wx:else>
-                        <label class="color54 fontSize12">已配送</label>
-                        </view>
-                    </view>
-
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">支付状态</label>
-                        <view wx:if = "{{info.payStatus == '0'}}">
-                        <label class="color54 fontSize12">未支付</label>
-                        </view>
-                        <view wx:else>
-                        <label class="color54 fontSize12">已支付</label>
-                        </view>
-                    </view>
-
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">订单时间</label>
-                        <label class="fontSize14">{{dateFr.getDate(info.createTime,'-',':',' ')}}</label>
-                    </view>
-
-                    
-                    <navigator url='../orderManage/orderDeatail/orderDeatail?orderId={{info. orderId}}'>
-                     <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12"></label>
-                        <label class="color54 fontSize12">订单详情</label>
-              
-                    </view>
-                    </navigator>
-                </view>
-                <view class="flexItem rowStyle centers orderStatus" catchtap="goDeatailEvent">
-                    <view class= "ct1">
-                    <view class="ct11">
-             
-                  </view>
-                   <view wx:if="{{info.orderStatus =='0' || info.orderStatus =='3'}}" class="ct11">
-                   <button style="font-size:10px" bindtap="quxiao" data-text = "{{info.orderId}}">取消订单</button>
-                   </view>
-                   <view wx:else class="ct11">
-                   <button style="font-size:10px" disabled="true" >取消订单</button>
-                   </view>
-                   <view wx:if="{{info.orderStatus =='3'}}" class="ct11">
-                   <button style="font-size:10px" bindtap="queren" data-text = "{{info.orderId}}">确认送达</button>
-                   </view>
-                   <view wx:else class="ct11">
-                   <button style="font-size:10px" disabled="true">确认送达</button>
-                   </view>
-                   </view>
-                </view>
-        </view>
-    </scroll-view>
+            </scroll-view>
         </view>
 
 
          <view class="view5 width20"  bindtouchstart="catchtouchstart" bindtouchend="catchtouchend">
             <scroll-view class="tableView" scroll-y="true" wx:if="{{hasData}}"  wx:for="{{ moneyInfo }}" wx:for-item="info">
-            <view wx:if="{{info.orderStatus == '1'}}">
-            
-        <view class="flexItem rowStyle tableViewCellHeader marginTop10" catchtap="goDeatailEvent">
-                    <image class="orderImage marginLeft12" src="../images/dingdan.png"></image>
-                    <label class="color54 fontSize12">订单编号: {{ info. orderId}}</label>
+                <view wx:if="{{info.orderStatus == '1'}}">
+                
+                    <view class="flexItem rowStyle tableViewCellHeader marginTop10" catchtap="goDeatailEvent">
+                        <image class="orderImage marginLeft12" src="/image/dingdan.png"></image>
+                        <label class="color54 fontSize12">订单编号: {{ info. orderId}}</label>
+                    </view>
+                
+                    <view class="flexItem columnStyle tableViewCell" catchtap="goDeatailEvent">
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">店铺名称</label>
+                            <label class="color54 fontSize12">{{ info.shopName }}</label>
+                        </view>
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">订单状态</label>
+                            <view wx:if = "{{info.orderStatus == '0'}}">
+                            <label class="color54 fontSize12">新订单</label>
+                            </view>
+                            <view wx:elif = "{{info.orderStatus == '1'}}">
+                            <label class="color54 fontSize12">已完成</label>
+                            </view>
+                            <view wx:elif = "{{info.orderStatus == '2'}}">
+                            <label class="color54 fontSize12">已取消</label>
+                            </view>
+                            <view wx:else>
+                            <label class="color54 fontSize12">已配送</label>
+                            </view>
+                        </view>
+
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">支付状态</label>
+                            <view wx:if = "{{info.payStatus == '0'}}">
+                            <label class="color54 fontSize12">未支付</label>
+                            </view>
+                            <view wx:else>
+                            <label class="color54 fontSize12">已支付</label>
+                            </view>
+                        </view>
+
+
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12">订单时间</label>
+                            <label class="fontSize14">{{dateFr.getDate(info.createTime,'-',':',' ')}}</label>
+                        </view>
+
+                        
+                        <navigator url='../orderManage/orderDeatail/orderDeatail?orderId={{info. orderId}}'>
+                        <view class="flexItem rowStyle marginBottom10 cellStyle">
+                            <label class="color54 fontSize12"></label>
+                            <label class="color54 fontSize12">订单详情</label>
+                
+                        </view>
+                        </navigator>
+                    </view>
+                    <view class="flexItem rowStyle centers orderStatus" catchtap="goDeatailEvent">
+    
+                    <view wx:if="{{info.orderStatus =='0' || info.orderStatus =='3'}}">
+                    <button style="font-size:10px" bindtap="quxiao" data-text = "{{info.orderId}}">取消订单</button>
+                    </view>
+                    <view wx:else>
+                    <button style="font-size:10px" disabled="true">取消订单</button>
+                    </view>
+                    <view wx:if="{{info.orderStatus =='3'}}">
+                    <button style="font-size:10px" bindtap="queren" data-text = "{{info.orderId}}">确认送达</button>
+                    </view>
+                    <view wx:else>
+                    <button style="font-size:10px" disabled="true">确认送达</button>
+                    </view>
+                    </view>
                 </view>
-               
-                <view class="flexItem columnStyle tableViewCell" catchtap="goDeatailEvent">
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">店铺名称</label>
-                        <label class="color54 fontSize12">{{ info.shopName }}</label>
-                    </view>
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">订单状态</label>
-                        <view wx:if = "{{info.orderStatus == '0'}}">
-                        <label class="color54 fontSize12">新订单</label>
-                        </view>
-                        <view wx:elif = "{{info.orderStatus == '1'}}">
-                        <label class="color54 fontSize12">已完成</label>
-                        </view>
-                        <view wx:elif = "{{info.orderStatus == '2'}}">
-                        <label class="color54 fontSize12">已取消</label>
-                        </view>
-                        <view wx:else>
-                        <label class="color54 fontSize12">已配送</label>
-                        </view>
-                    </view>
-
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">支付状态</label>
-                        <view wx:if = "{{info.payStatus == '0'}}">
-                        <label class="color54 fontSize12">未支付</label>
-                        </view>
-                        <view wx:else>
-                        <label class="color54 fontSize12">已支付</label>
-                        </view>
-                    </view>
-
-
-                    <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12">订单时间</label>
-                        <label class="fontSize14">{{dateFr.getDate(info.createTime,'-',':',' ')}}</label>
-                    </view>
-
-                    
-                    <navigator url='../orderManage/orderDeatail/orderDeatail?orderId={{info. orderId}}'>
-                     <view class="flexItem rowStyle marginBottom10 cellStyle">
-                        <label class="color54 fontSize12"></label>
-                        <label class="color54 fontSize12">订单详情</label>
-              
-                    </view>
-                    </navigator>
-                </view>
-                <view class="flexItem rowStyle centers orderStatus" catchtap="goDeatailEvent">
- 
-                   <view wx:if="{{info.orderStatus =='0' || info.orderStatus =='3'}}">
-                   <button style="font-size:10px" bindtap="quxiao" data-text = "{{info.orderId}}">取消订单</button>
-                   </view>
-                   <view wx:else>
-                   <button style="font-size:10px" disabled="true">取消订单</button>
-                   </view>
-                   <view wx:if="{{info.orderStatus =='3'}}">
-                   <button style="font-size:10px" bindtap="queren" data-text = "{{info.orderId}}">确认送达</button>
-                   </view>
-                   <view wx:else>
-                   <button style="font-size:10px" disabled="true">确认送达</button>
-                   </view>
-                </view>
-        </view>
-    </scroll-view>
+            </scroll-view>
         </view>
   </view>
 

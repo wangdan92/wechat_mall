@@ -7,6 +7,7 @@
   bottom: 46px;
   overflow: hidden;
   font-family:"微软雅黑";
+  margin-top: 10px;
 }
 
 .goods .menu-wrapper {
@@ -581,6 +582,7 @@
   line-height: 40px;
   /* border: 1px solid rgba(7,17,27,0.1); */
   position: relative;
+
 }
 
 .tab .tab-item {
