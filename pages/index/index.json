@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "mp-searchbar": "../components/weui/searchbar/searchbar"
+  },
+  "navigationBarTitleText": "校园超市平台"
+}

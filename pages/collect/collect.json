@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "mp-searchbar": "../components/weui/searchbar/searchbar"
+  },
+  "navigationBarTitleText": "店铺收藏"
+}

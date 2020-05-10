@@ -1,0 +1,48 @@
+<form bindsubmit="formSubmit">
+  <view class="people">
+    联系人
+  </view>
+  <view class="message">
+    <!-- 姓名   -->
+    <view class="height1">
+      <text>收货人</text>
+      <input name="name" placeholder="请填写收货人姓名" value="王维铭" placeholder-style="font-size:28rpx;color:#999;" />
+    </view>
+    
+    <!-- 手机 -->
+    <view class="height1">
+      <text>联系电话</text>
+      <input name="mobile" placeholder="请填写收货人手机号码" value="{{phone}}" type="number" placeholder-style="font-size:28rpx;color:#999;" />
+    </view>
+     <view class="height1">
+      <text class="width" style='font-size:30rpx'>校内地址</text>
+      <input class="width2" name="detail" placeholder="例：学1D603" value="{{cityDetail}}" placeholder-style="font-size:28rpx;color:#999;" />
+    </view>
+  </view>
+  <view class="people">
+    <text></text>
+  </view>
+  
+    <!--详细地址-->
+
+  <view class="people">
+  <text>订单详情</text>
+  </view>
+  <view>
+  <view wx:for="{{shoplist}}">
+  <view  class="height1">
+  <view><text class = "c1">{{item.name}}</text></view>
+  
+  <view><text class="c2">x{{item.num}}</text></view>
+  <view><text calss="c3">{{item.price}}</text></view>
+  </view>
+  </view>
+  <view class="height1"></view>
+  <view class = "height1"><text>配送费：</text> {{payE}}</view>
+  <view class ="height1">
+  <text>总价：</text>{{total1111}}  </view>
+  </view>
+  
+
+  <button class="save" formType="submit">支付</button>
+</form>

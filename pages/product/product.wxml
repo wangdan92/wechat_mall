@@ -1,0 +1,26 @@
+<!--pages/product/product.wxml-->
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+  <block wx:for="{{imgUrls}}"wx:key="imgUrls">
+    <swiper-item>
+      <image src="http://127.0.0.1:8080/o2o{{item.productImgList.imgAddr}}" data-src="{{item}}" bindtap="previewImage" mode="widthFix"></image>
+    </swiper-item>
+  </block>
+</swiper>
+<!--商品价格和商品描述-->
+<view>
+<view class="product-name-wrap">
+    {{imgUrls.productName}}
+  </view>
+  <view class="product-name-wrap">
+    描述:{{imgUrls.productDesc}}
+  </view>
+  <view class="product-name-wrap">
+    库存:{{imgUrls.stock}}
+  </view>
+  <view class="product-price-wrap">
+      <view>
+        <p class="product-price-new">￥{{imgUrls.promotionPrice}}</p>  
+        <p class="product-price-old">原价￥{{imgUrls.normalPrice}}</p> 
+      </view>
+  </view>
+</view>

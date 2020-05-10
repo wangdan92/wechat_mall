@@ -1,0 +1,70 @@
+<!--pages/orderManage/orderDeatail.wxml-->
+<wxs module="dateFr" src="../../../filter/dateFr.wxs"></wxs>
+<view class="container marginTop10">    
+    <view class="flexItem rowStyle tableViewCellHeader heightAndWidth">
+        <image class="orderImage marginLeft12" src="../../images/dingdan.png"></image>
+        <label class="color54 fontSize12">订单编号: {{ moneyInfo.orderId}}</label>
+    </view>
+
+    <view class="flexItem rowStyle personInfo">
+        <view class="flexItem rowStyle marginLeft12 centers">
+            <image class="userHeader" src="{{ url }}"></image>
+            <label class="color54 fontSize12">联系人：{{ moneyInfo.name }}</label>
+        </view>
+
+        <view class="flexItem rowStyle marginRight12 centers" catchtap="callEvent">
+            <image class="call" src="../../images/call.png"></image>
+            <label class="color54 fontSize12">电话：{{ moneyInfo.phone }}</label>
+        </view>
+        <view class="flexItem rowStyle marginRight12 centers" catchtap="callEvent">
+            <image class="call" src="../../images/call.png"></image>
+            <label class="color54 fontSize12">地址:{{ moneyInfo.address }}</label>
+        </view>
+    </view>
+
+     <view class="flexItem columnStyle tableViewCell" catchtap="goDeatailEvent">
+                    <view class="flexItem rowStyle marginBottom10 cellStyle">
+                        <label class="color54 fontSize12">订单时间：</label>
+                        <label class="fontSize14">{{dateFr.getDate(moneyInfo.createTime,'-',':',' ')}}</label>
+                    </view>
+                    <view wx:if="{{moneyInfo.orderStatus == '2'}}">
+                    <view class="flexItem rowStyle marginBottom10 cellStyle">
+                        <label class="color54 fontSize12">完成时间</label>
+                        <label class="color54 fontSize12">{{ moneyInfo.lastEditTime }}</label>
+                    </view>
+                    </view>
+                    
+                    <!-- <view class="flexItem rowStyle marginBottom10 cellStyle">
+                        <label class="color54 fontSize12">地址:</label>
+                        <label class="color54 fontSize12">{{ moneyInfo.address }}</label>
+                    </view> -->
+                    <view class="flexItem rowStyle marginBottom10 cellStyle">
+                        <label class="color54 fontSize12">商品</label>
+                        <label class="color54 fontSize12">数量</label>
+                    </view>
+                    <view wx:if ="{{hasData}}" wx:for="{{ moneyInfo.orderItemList }}" wx:for-item="info">
+                   <view class="flexItem rowStyle marginBottom10 cellStyle">
+                        <label class="color54 fontSize12">{{info.productName}}</label>
+                        <label class="color54 fontSize12">{{info.count}}</label>
+                    </view>
+                   </view>
+                   <view class="flexItem rowStyle marginBottom10 cellStyle">
+                        <label class="color54 fontSize12">总额</label>
+                        <label class="color54 fontSize12">{{moneyInfo.orderTotal}}</label>
+                    </view>
+                </view>
+
+   <view class="flexItem rowStyle centers orderStatus" catchtap="goDeatailEvent">
+                    <image class="statusImage" src="{{ statusImage[0] }}"></image>
+                    <view wx:if="{{info.orderStatus == '1'}}">
+                    <label class="statusText fontSize14">{{ statusText[0] }}</label>
+                    </view>
+                     <view wx:elif="{{info.orderStatus == '2'}}">
+                    <label class="statusText fontSize14">{{ statusText[1] }}</label>
+                    </view>
+                
+                     <view wx:else>
+                    <label class="statusText fontSize14">{{ statusText[2] }}</label>
+                    </view>
+                </view>
+</view>

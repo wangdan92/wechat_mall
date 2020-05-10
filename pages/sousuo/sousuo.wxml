@@ -1,0 +1,31 @@
+<!--pages/sousuo/sousuo.wxml-->
+<view>
+    <view class='page_row' bindtap="suo">  
+      <view class="search">  
+        <view class="df search_arr">  
+          <icon class="searchcion" size='20' type='search'></icon>  
+          <input class="gtgt"  bindinput="wenben" type = "text"  placeholder="请输入超市名" value="{{searchValue}}"/>  
+        </view>  
+      </view>  
+      <view class='sousuo' bindtap="sousuo1">搜索</view>  
+    </view>
+
+    <scroll-view scroll-y="true">
+		<block wx:for="{{mainShopList}}" wx:key="mainShopList">
+	<navigator url='../shop/shop?shopId={{item.shopId}}'>
+				<view class="shoplist">
+					<view class="shop-img">
+						<image src="http://127.0.0.1:8080/o2o{{item.shopImg}}" />
+					</view>
+					<view class="shop-right">
+					<view class="now-title">{{item.shopName}}</view>
+						<view class="evaluate">{{item.shopDesc}}</view>
+						<view class="describe">起送￥{{item.minPrice}} | 配送费￥{{item.deliveryPrice}}</view>
+					</view>
+				</view>
+</navigator>
+		</block>
+	</scroll-view>
+
+    
+</view>
