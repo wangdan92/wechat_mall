@@ -105,18 +105,20 @@ quxiao:function(e){
     }
   })
 },
-queren:function(){
+queren:function(e){
+  let that=this;
   console.log(e.currentTarget.dataset.text)
   var num = e.currentTarget.dataset.text
   wx.showModal({
     title: '提示',
-    content: '确认取消订单吗？',
+    content: '确认订单已经送达吗？',
     success (res) {
       if (res.confirm) {
         wx.request({
           url: prefixUrl+'/o2o/buyer/order/finish/?orderId=' + e.currentTarget.dataset.text,       
           success(q) {
-            console.log(q.data)
+            console.log(q.data);
+            that.onLoad();
           }
         })
       } else if (res.cancel) {

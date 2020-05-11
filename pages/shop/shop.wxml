@@ -3,14 +3,11 @@
 <view class="header">
 	<view class="content-wrapper">
 		<view class="avatar">
-			<image src="http://127.0.0.1:8080/o2o{{shopImg}}" style="width:64px;height:64px;"></image>
+			<image src="{{prefixUrl}}/o2o{{shopImg}}" style="width:64px;height:64px;"></image>
 		</view>
-		<!-- <view class="avatar">
-			<image bindtap="addLike" src="{{isLike?'../../image/enshrine_select.png':'../../image/enshrine.png'}}" />
-		</view> -->
 		<view class="content">
 			<view class="title">
-				<image src="../image/brand@2x.png" style="width:30px;height:18px;"></image>
+				<image src="/image/brand@2x.png" style="width:30px;height:18px;"></image>
 				<span class="name">{{shopName}}</span>
 			</view>
 
@@ -19,17 +16,24 @@
 			</view>
 			<view v-if="seller.supports" class="support">
 				<span class="icon" :class="classMap[seller.supports[0].type]">
-					<image src="../image/decrease_1@2x.png" style="width:12px;height:12px;"></image>
+					<image src="/image/decrease_1@2x.png" style="width:12px;height:12px;"></image>
 				</span>
 				<span class="text">欢迎师生订购下单</span>
 			</view>
 		</view>
+
+		<view class="isLike">
+			<image style="width:64rpx;height:64rpx;"
+			bindtap="addLike" 
+			src="{{isLike?'/image/enshrine_select.png':'/image/enshrine.png'}}" />
+		</view>
+
 		<view class="supports-count">
 			<view class="count">5个</view>
 		</view>
 	</view>
 	<view class="bulletin-wrapper">
-		<image src="../image/bulletin@2x.png" style="width:22px;height:12px;"></image>
+		<image src="/image/bulletin@2x.png" style="width:22px;height:12px;"></image>
 		<span class="bulletin-text">{{shopDesc}}</span>
 	</view>
 	<view class="background">
@@ -74,7 +78,7 @@
 				<view wx:for="{{item.foods}}" class="food-item" wx:for-item="food" data-food="{{food}}">
 
 					<view class="icon">
-						<image src="http://127.0.0.1:8080/o2o{{food.icon}}" style="width: 57px;height: 57px"></image>
+						<image src="{{prefixUrl}}/o2o{{food.icon}}" style="width: 57px;height: 57px"></image>
 					</view>
 					<view class="content">
 						<view class="name">{{food.name}}</view>

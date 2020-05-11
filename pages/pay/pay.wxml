@@ -32,8 +32,8 @@
     <view wx:for="{{shoplist}}" style=" background-color: white;">
       <view  class="height1 spacebetween">
           <view><text class = "c1">{{item.name}}</text></view>
-          <view><text class="c2">x{{item.num}}</text></view>
-          <view><text calss="c3">¥ {{item.price}}</text></view>
+          <view><text class="c2">x{{item.count}}</text></view>
+          <view><text calss="c3">¥ {{item.currentPrice}}</text></view>
       </view>
     </view>
   </view>

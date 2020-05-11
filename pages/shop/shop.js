@@ -1,6 +1,10 @@
 const app = getApp()
+const common = require('../../utils/common.js')
+const prefixUrl=common.prefixUrl
+const util = require('../../utils/util.js')
 Page({
   data: {
+      prefixUrl: prefixUrl,
       goods: [
           {
               "name": "热销榜",
@@ -1173,7 +1177,7 @@ Page({
   shopdetail: function(e){
       var that = this;//这部必须有，非常重要
       wx.request( {//从后端获取数据
-        url: 'http://127.0.0.1:8080/o2o/frontend/getShopDetails?shopId=shopId',//后端传数据的路径
+        url: prefixUrl+'/o2o/frontend/getShopDetails?shopId=shopId',//后端传数据的路径
         data: {
           shopId: this.data.shopId
         },
@@ -1261,7 +1265,8 @@ Page({
       var mark = 'a' + index + 'b' + parentIndex;;
       var price = this.data.goods[parentIndex].foods[index].price;
       var name = this.data.goods[parentIndex].foods[index].name;
-      var obj = { price: price, num: num, mark: mark, name: name, index: index, parentIndex: parentIndex };
+      var productId= this.data.goods[parentIndex].foods[index].productId;
+      var obj = {productId:productId, currentPrice: price, count: num, mark: mark, name: name, index: index, parentIndex: parentIndex };
       var carArray1 = this.data.carArray.filter(item => item.mark != mark);
       carArray1.push(obj);
       console.log(carArray1);
@@ -1280,9 +1285,7 @@ Page({
       console.log("car");
      
       for(var i = 0; i< this.data.carArray.length; i++){
-          //console.log(this.data.carArray[i].num);
-          if(this.data.carArray[i].num == 0){
-              //console.log("empty: "+i);
+          if(this.data.carArray[i].count == 0){
               var item = "carArray["+i+"]";
               this.setData({
                   item : this.data.carArray.splice(i,1)
@@ -1295,7 +1298,7 @@ Page({
       //关闭弹起
       var count1 = 0
       for (let i = 0; i < carArray1.length; i++) {
-          if (carArray1[i].num == 0) {
+          if (carArray1[i].count == 0) {
               count1++;
           }
       }
@@ -1343,17 +1346,18 @@ Page({
       var index = e.currentTarget.dataset.itemIndex;
       var parentIndex = e.currentTarget.dataset.parentindex;
       this.data.goods[parentIndex].foods[index].Count++;
-      var mark = 'a' + index + 'b' + parentIndex
+      let currentGood= this.data.goods[parentIndex].foods[index];
+      var mark = 'a' + index + 'b' + parentIndex;
       var price = this.data.goods[parentIndex].foods[index].price;
       var num = this.data.goods[parentIndex].foods[index].Count;
       var name = this.data.goods[parentIndex].foods[index].name;
-      var obj = { price: price, num: num, mark: mark, name: name, index: index, parentIndex: parentIndex };
+      var productId=currentGood.productId;
+      var obj = {productId:productId, currentPrice: price, count: num, mark: mark, name: name, index: index, parentIndex: parentIndex };
       var carArray1 = this.data.carArray.filter(item => item.mark != mark)
       carArray1.push(obj)
       carArray1.sort(function(a,b){
         return a.index-b.index
       })
-      console.log(carArray1);
       this.setData({
           carArray: carArray1,
           goods: this.data.goods
@@ -1362,6 +1366,7 @@ Page({
       this.setData({
           payDesc: this.payDesc()
       });
+    console.log("====购物车最终数据===",carArray1);
     app.globalData.dingdan = carArray1 
       //this.setData({
         //  carArray: this.paixu(this.data.carArray)
@@ -1376,8 +1381,8 @@ Page({
       var totalPrice = 0;
       var totalCount = 0;
       for (var i = 0; i < carArray.length; i++) {
-          totalPrice += carArray[i].price * carArray[i].num;
-          totalCount += carArray[i].num
+          totalPrice += carArray[i].currentPrice * carArray[i].count;
+          totalCount += carArray[i].count;
       }
       this.setData({
           totalPrice: totalPrice,

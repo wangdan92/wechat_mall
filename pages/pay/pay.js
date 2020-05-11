@@ -57,25 +57,42 @@ Page({
       },
     })
   },
-  formSubmit(e) {
+  formSubmit: function(e) {
     let that=this;
-    let shoplistArr=JSON.stringify(that.data.shoplist);
+    let shoplistArr=that.data.shoplist;
     let shopName= that.data.shopName;
     let orderTotal=that.data.total1111;
     let formData=e.detail.value;
-    let param={'orderItemList':that.data.shoplist,'shopName':shopName,'orderTotal':orderTotal,'name':formData.name,'phone':formData.mobile,'address':formData.detail};
-    console.log('创建订单提交的参数',param);
-    wx.request( {//从后端获取数据
-      url: prefixUrl+'/o2o/buyer/order/create',//后端传数据的路径
-      data: {param},
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success(res) {
-        console.log("====下单成功",res);
-        wx.hideLoading();//隐藏加载
+    let param={'orderItemList':that.data.shoplist,'shopName':shopName,'name':formData.name,'phone':formData.mobile,'address':formData.detail};
+    console.log('创建订单提交的参数',JSON.stringify(param));
+    wx.showModal({
+      title: '确认支付提示',
+      content: '您确定要发起该订单的支付吗?',
+      success (res) {
+        if (res.confirm) {
+          console.log('用户点击确定');
+          wx.request( {//从后端获取数据
+            url: prefixUrl+'/o2o/buyer/order/create',//后端传数据的路径
+            data: {param},
+            header: {
+              'content-type': 'application/json' // 默认值
+            },
+            method: 'POST',
+            success(res) {
+              console.log("====下单成功",res);
+              wx.hideLoading();//隐藏加载
+               wx.reLaunch({
+                 url: '/pages/orderManage/orderManage',
+               })
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
       }
-    })
+    });
+   
+  
    },
 
 
@@ -127,9 +144,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-   formSubmit: function (e) {
-    console.log('form发生了submit事件，携带数据为：', e.detail)
-
-   }
+  }
 })
